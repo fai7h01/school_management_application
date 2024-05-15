@@ -1,2 +1,4 @@
-package com.cydeo.converter;public class UserConverter {
+package com.cydeo.converter;
+
+public class UserConverter {
 }

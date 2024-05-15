@@ -1,2 +1,4 @@
-package com.cydeo.controller;public class UserController {
+package com.cydeo.controller;
+
+public class UserController {
 }

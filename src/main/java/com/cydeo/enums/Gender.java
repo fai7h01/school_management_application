@@ -1,2 +1,4 @@
-package com.cydeo.enums;public class Gender {
+package com.cydeo.enums;
+
+public enum Gender {
 }
