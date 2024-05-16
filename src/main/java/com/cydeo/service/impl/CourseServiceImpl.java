@@ -24,7 +24,7 @@ public class CourseServiceImpl extends AbstractMapService <Course, Long> impleme
         //Requirement: Assign new id to the course by UUID library
         if (course.getId() == null)
             course.setId(UUID.randomUUID().getMostSignificantBits());
-
+        //Requirement: before saving a new course, set all students with status "false"
         studentService.findAll().forEach(student -> student.getCourseStatus().put(course, false));
 
         return super.save(course.getId(), course);
