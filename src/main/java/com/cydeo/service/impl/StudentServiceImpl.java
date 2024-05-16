@@ -1,14 +1,25 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.entity.Student;
+import com.cydeo.service.CourseService;
 import com.cydeo.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class StudentServiceImpl extends AbstractMapService<Student,String> implements StudentService {
+
+    private final CourseService courseService;
+
+    public StudentServiceImpl(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
     @Override
     public Student save(Student student) {
+
+        courseService.findAll().forEach(course -> student.getCourseStatus().put(course,false));
+
         return super.save(student.getEmail(), student);
     }
 
