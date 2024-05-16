@@ -2,8 +2,11 @@ package com.cydeo.service.impl;
 
 import com.cydeo.entity.Role;
 import com.cydeo.service.RoleService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+@Service
 
 public class RoleServiceImpl extends AbstractMapService<Role, Long> implements RoleService {
     @Override
