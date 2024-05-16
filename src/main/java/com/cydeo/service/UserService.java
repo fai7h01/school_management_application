@@ -2,7 +2,9 @@ package com.cydeo.service;
 
 import com.cydeo.entity.User;
 
-public interface UserService extends CrudService <User,String> {
+import java.util.List;
 
+public interface UserService extends CrudService <User,String> {
+    List<User> findManagers();
 
 }
