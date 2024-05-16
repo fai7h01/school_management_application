@@ -12,10 +12,10 @@ public class CourseServiceImpl extends AbstractMapService <Course, Long> impleme
     @Override
     public Course save(Course course) {
         //Requirement: Assign new id to the course by UUID library
-        if (course.getCourseId() == null)
-            course.setCourseId(UUID.randomUUID().getMostSignificantBits());
+        if (course.getId() == null)
+            course.setId(UUID.randomUUID().getMostSignificantBits());
 
-        return super.save(course.getCourseId(), course);
+        return super.save(course.getId(), course);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CourseServiceImpl extends AbstractMapService <Course, Long> impleme
     @Override
     public void update(Course course) {
         //before update new course, should we do anything in term of status???
-        super.update(course.getCourseId(), course);
+        super.update(course.getId(), course);
 
     }
 
@@ -70,15 +70,4 @@ public class CourseServiceImpl extends AbstractMapService <Course, Long> impleme
     */
     }
 }
-
-/*
-CREATE:
-- Assign new id to the course by UUID library.
-- While new course is created, newly created course should assign to all students with status false.==> ENUMS for status??? Status as new variable for Course?
-========
-DELETE:
-- Courses with lessons cannot be deleted. (In that case, the page provide this message “This Course has either one or more than one lessons. Not allowed to delete“.)
-- If the course is successfully deleted, show “This Course is successfully deleted“ message in the page.
-- Before deleting the course, remove this course from all students (courseStudent)
-*/
 
