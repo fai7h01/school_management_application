@@ -24,10 +24,10 @@ public class StudentController {
 
     @GetMapping("/create")
     public String createUser(Model model){
-
         model.addAttribute("student",new Student());
 
        model.addAttribute("states", State.values());
+       model.addAttribute("students", studentService.findAll());
 
         return "/student/student-create";
     }
