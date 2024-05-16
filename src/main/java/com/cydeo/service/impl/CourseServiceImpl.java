@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service//like @Component - creates bean
-public class CourseServiceImpl extends AbstractMapService <Course, Long> implements CourseService {
-
+public class CourseServiceImpl extends AbstractMapService<Course, Long> implements CourseService {
 
 
     private final StudentService studentService;
@@ -49,37 +48,9 @@ public class CourseServiceImpl extends AbstractMapService <Course, Long> impleme
 
     @Override
     public void deleteById(Long id) {
-        //- Courses with lessons cannot be deleted. (In that case, the page provide this message “This Course has either one or more than one lessons. Not allowed to delete“.)
-        //- If the course is successfully deleted, show “This Course is successfully deleted“ message in the page.
-        //- Before deleting the course, remove this course from all students (courseStudent)
-
-        // Need lesson info and student info to complete this part
-
-        // Draft of solution
-        // Find the course by id
-        Course course = findById(id);
-        /*
-        // Check if the course exists
-        if (course != null) {
-            // Check if the course has any lessons
-            if (!course.getLessons().isEmpty()) {
-                // Throw an exception or provide a message indicating that the course has lessons
-                throw new IllegalStateException("This Course has one or more lessons. Not allowed to delete.");
-            } else {
-                // Remove the course from all students
-                course.getCourseStudents().forEach(student -> student.getCourses().remove(course));
-                // Delete the course
-                super.deleteById(id);
-                // Show a success message
-                System.out.println("This Course is successfully deleted.");
-            }
-        } else {
-            // Show a message indicating that the course does not exist
-            System.out.println("Course not found with id: " + id);
-        }
-
+        super.deleteById(id);
     }
-    */
-    }
+
 }
+
 
