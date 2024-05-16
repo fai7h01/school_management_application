@@ -9,7 +9,7 @@ public class Student {
     private String email;
     private Gender gender;
     private Address address;
-    private Map <Course,Boolean> courseStatus;
-    private Map<Lesson, InstructorAssessment> lessonGrade;
+//    private Map <Course,Boolean> courseStatus;
+//    private Map<Lesson, InstructorAssessment> lessonGrade;
 
 }
