@@ -2,6 +2,7 @@ package com.cydeo.service.impl;
 
 import com.cydeo.entity.Course;
 import com.cydeo.service.CourseService;
+import com.cydeo.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,11 +10,22 @@ import java.util.UUID;
 
 @Service//like @Component - creates bean
 public class CourseServiceImpl extends AbstractMapService <Course, Long> implements CourseService {
+
+
+
+    private final StudentService studentService;
+
+    public CourseServiceImpl(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @Override
     public Course save(Course course) {
         //Requirement: Assign new id to the course by UUID library
         if (course.getId() == null)
             course.setId(UUID.randomUUID().getMostSignificantBits());
+
+        studentService.findAll().forEach(student -> student.getCourseStatus().put(course, false));
 
         return super.save(course.getId(), course);
     }
