@@ -34,15 +34,12 @@ public class CourseController {
         return "redirect:/course/course-create";
     }
 
-    @GetMapping("/update/{id}")//check @pathvariable - Can "courseId" after Long be acceptable?
-    public String editCourse(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("course", courseService.findById(id));
-        model.addAttribute("managers", userService.findManagers());
-        model.addAttribute("courses", courseService.findAll());
-        return "/course/course-update";
-    }
 
     //update
 
     //delete
+
 }
+
+
+
