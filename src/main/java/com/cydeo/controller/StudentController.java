@@ -43,6 +43,14 @@ public class StudentController {
         return "redirect:/student/create";
     }
 
+    @GetMapping("/assign/{email}")
+    public String assignStudent(@PathVariable("email") String email, Model model){
+        Student student = studentService.findById(email);
+        model.addAttribute("student", student);
+
+        return "/student/student-courses";
+    }
+
 
     @GetMapping("/enroll/{email}/{courseId}")
     public String enrollStudent(@PathVariable String email, @PathVariable Long courseId){
