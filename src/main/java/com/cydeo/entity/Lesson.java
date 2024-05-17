@@ -10,13 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Lesson
-    {
+public class Lesson {
     private String id;
     private String name;
     private String description;
     private Role instructor;
-    // private Course course;
-    // private Student student;
-    }
+    private Course course;
+    private Student student;
+}

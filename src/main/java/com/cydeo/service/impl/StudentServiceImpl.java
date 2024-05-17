@@ -1,5 +1,6 @@
 package com.cydeo.service.impl;
 
+import com.cydeo.entity.Course;
 import com.cydeo.entity.Student;
 import com.cydeo.service.CourseService;
 import com.cydeo.service.StudentService;
@@ -43,5 +44,14 @@ public class StudentServiceImpl extends AbstractMapService<Student,String> imple
     public void deleteById(String email) {
         super.deleteById(email);
 
+    }
+
+
+    @Override
+    public void enrollStudent(String username, Long id) {
+        Student student = findById(username);
+        Course enrollCourse = courseService.findById(id);
+        student.getCourseStatus().put(enrollCourse, true);
+        //lesson service needed
     }
 }
