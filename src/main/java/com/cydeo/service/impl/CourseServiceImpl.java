@@ -13,11 +13,11 @@ public class CourseServiceImpl extends AbstractMapService<Course, Long> implemen
 
 
 
-    private final StudentService studentService;
+    //private final StudentService studentService;
 
-    public CourseServiceImpl(StudentService studentService) {
-        this.studentService = studentService;
-    }
+    //public CourseServiceImpl(StudentService studentService) {
+      //  this.studentService = studentService;
+   // }
 
 
     @Override
@@ -26,7 +26,7 @@ public class CourseServiceImpl extends AbstractMapService<Course, Long> implemen
         if (course.getId() == null)
             course.setId(UUID.randomUUID().getMostSignificantBits());
         //Requirement: before saving a new course, set all students with status "false"
-        studentService.findAll().forEach(student -> student.getCourseStatus().put(course, false));
+        //studentService.findAll().forEach(student -> student.getCourseStatus().put(course, false));
 
         return super.save(course.getId(), course);
     }

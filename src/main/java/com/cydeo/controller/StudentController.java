@@ -51,5 +51,12 @@ public class StudentController {
         return "/student/student-courses";
     }
 
+    @GetMapping("/delete/{email}")
+    public String deleteStudent(@PathVariable("email") String username){
+
+        studentService.deleteById(username);
+
+        return "redirect:/student/create";
+    }
 
 }
