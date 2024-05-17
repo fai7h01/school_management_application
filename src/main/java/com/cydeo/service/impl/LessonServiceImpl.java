@@ -5,14 +5,18 @@ import com.cydeo.service.LessonService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+
 @Service
 public class LessonServiceImpl extends AbstractMapService<Lesson,String>implements LessonService
     {
 
     @Override
-    public Lesson save(Lesson lesson)
-        {
-        return null;
+    public Lesson save(Lesson lesson){
+        if (lesson.getId() == null)
+            lesson.setId(UUID.randomUUID().toString());
+
+        return super.save(lesson.getId(), lesson);
         }
 
     @Override
@@ -28,9 +32,8 @@ public class LessonServiceImpl extends AbstractMapService<Lesson,String>implemen
         }
 
     @Override
-    public List<Lesson> findAll()
-        {
-        return List.of();
+    public List<Lesson> findAll() {
+        return super.findAll();
         }
 
     @Override
