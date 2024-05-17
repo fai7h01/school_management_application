@@ -13,10 +13,10 @@ public class LessonServiceImpl extends AbstractMapService<Lesson,String>implemen
 
     @Override
     public Lesson save(Lesson lesson){
-            if (lesson.getId() == null)
-                lesson.setId(UUID.randomUUID().toString());
+        if (lesson.getId() == null)
+            lesson.setId(UUID.randomUUID().toString());
 
-            return super.save(lesson.getId(), lesson);
+        return super.save(lesson.getId(), lesson);
         }
 
     @Override
