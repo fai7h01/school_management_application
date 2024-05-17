@@ -20,6 +20,7 @@ public class StudentServiceImpl extends AbstractMapService<Student,String> imple
 
         courseService.findAll().forEach(course -> student.getCourseStatus().put(course,false));
 
+
         return super.save(student.getEmail(), student);
     }
 
