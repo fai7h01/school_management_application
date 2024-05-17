@@ -34,6 +34,7 @@ public class CourseController {
         return "redirect:/course/course-create";
     }
 
+
     //update
 
     //delete
