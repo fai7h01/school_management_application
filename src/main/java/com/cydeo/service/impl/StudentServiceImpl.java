@@ -6,10 +6,14 @@ import com.cydeo.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Service
 public class StudentServiceImpl extends AbstractMapService<Student,String> implements StudentService {
 
     private final CourseService courseService;
+    private static final Logger logger = Logger.getLogger(StudentServiceImpl.class.getName());
 
     public StudentServiceImpl(CourseService courseService) {
         this.courseService = courseService;
@@ -26,7 +30,7 @@ public class StudentServiceImpl extends AbstractMapService<Student,String> imple
 
     @Override
     public Student findById(String email) {
-        return super.findById(email);
+        return findAll().stream().filter(user -> user.getEmail().equals(email)).findFirst().orElseThrow();
     }
 
     @Override
@@ -36,7 +40,11 @@ public class StudentServiceImpl extends AbstractMapService<Student,String> imple
 
     @Override
     public void update(Student student) {
-        super.update(student.getEmail(), student);
+        Student studentInDB = findById(student.getEmail());
+        findAll().remove(studentInDB);
+        save(student);
+        logger.log(Level.INFO,"Print updated user after update");
+        System.out.println(findById(student.getEmail()));
 
     }
 
