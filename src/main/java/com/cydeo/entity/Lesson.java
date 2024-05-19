@@ -6,14 +6,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Lesson
     {
-    private String id;
-    private Student student;
+    private Long id;
+ //   private List<Student> student;
+        private Student student;
 
         @NotBlank(message = "Lesson Name is a required field")
         @Size(max = 40, min = 2, message = "Lesson Name must be between 2 and 40 characters long")
@@ -25,8 +27,16 @@ public class Lesson
         private String description;
 
         @NotNull(message = "please select a lesson instructor")
-        private Role instructor;
+        private Instructor instructor;
 
         @NotNull(message = "please select a course")
         private Course course;
+
+        public Lesson(Long id, Student student, String name, Instructor instructor, Course course) {
+            this.id = id;
+            this.student = student;
+            this.name = name;
+            this.instructor = instructor;
+            this.course = course;
+        }
     }
