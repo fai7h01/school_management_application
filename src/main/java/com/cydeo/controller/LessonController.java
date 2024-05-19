@@ -1,7 +1,10 @@
 package com.cydeo.controller;
 
 import com.cydeo.entity.Lesson;
+import com.cydeo.service.CourseService;
 import com.cydeo.service.LessonService;
+import com.cydeo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/lesson")
 public class LessonController
     {
-    LessonService lessonService;
-    public LessonController(LessonService lessonService)
+    private final LessonService lessonService;
+    private final CourseService courseService;
+    private final UserService userService;
+
+    public LessonController(LessonService lessonService, CourseService courseService, UserService userService)
         {
         this.lessonService = lessonService;
+        this.courseService = courseService;
+        this.userService = userService;
         }
-
-
-
-
-
-
-
 
 
     @GetMapping("/update/{id}")
@@ -29,25 +30,16 @@ public class LessonController
         {
         model.addAttribute("lesson",lessonService.findById(id));
         model.addAttribute("description",lessonService.findById(id).getDescription());
-        model.addAttribute("instructor",lessonService.findById(id).getInstructor());
-        //model.addAttribute("course",lesson.getCourse());
+        model.addAttribute("instructor",userService.findInstructor());
+        model.addAttribute("course",courseService.findAll());
         return "/lesson/lesson-update";
         }
 
     @PostMapping("/update")
-    public String updateLesson(@ModelAttribute("lesson") Lesson lesson)
+    public String updateLesson(@Valid @ModelAttribute("lesson") Lesson lesson)
         {
         lessonService.update(lesson);
         return "redirect:/lesson/update";
         }
-
-   /*
-    @GetMapping("/delete/{id}")
-    public String deleteLesson(@PathVariable("id") String id)
-        {
-        lessonService.deleteById(id);
-        return "redirect:/lesson/create";
-        }
-        */
 
     }
