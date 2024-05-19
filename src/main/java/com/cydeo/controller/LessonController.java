@@ -4,6 +4,7 @@ import com.cydeo.entity.Lesson;
 import com.cydeo.service.CourseService;
 import com.cydeo.service.LessonService;
 import com.cydeo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class LessonController
         }
 
     @PostMapping("/update")
-    public String updateLesson(@ModelAttribute("lesson") Lesson lesson)
+    public String updateLesson(@Valid @ModelAttribute("lesson") Lesson lesson)
         {
         lessonService.update(lesson);
         return "redirect:/lesson/update";
