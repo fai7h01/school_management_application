@@ -58,5 +58,25 @@ public class StudentController {
 
         return "redirect:/student/create";
     }
+    @GetMapping("/update/{email}")
+    public String updateStudent(@PathVariable String email, Model model) {
+        model.addAttribute("student",studentService.findById(email));
+        model.addAttribute("states", State.values());
+
+        return "/student/student-update";
+    }
+
+    @PostMapping("/update")
+    public String updateStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, Model model) {
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("states", State.values());
+            return "/student/student-update";
+        }
+        studentService.update(student);
+
+        return "redirect:/student/create";
+
+    }
 
 }
