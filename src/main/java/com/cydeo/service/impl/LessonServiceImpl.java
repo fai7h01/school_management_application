@@ -6,40 +6,44 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
-public class LessonServiceImpl extends AbstractMapService<Lesson,String>implements LessonService
-    {
+public class LessonServiceImpl extends AbstractMapService<Lesson, String> implements LessonService {
 
     @Override
-    public Lesson save(Lesson lesson){
+    public Lesson save(Lesson lesson) {
         if (lesson.getId() == null)
             lesson.setId(UUID.randomUUID().toString());
 
         return super.save(lesson.getId(), lesson);
-        }
+    }
 
     @Override
-    public void update(Lesson lesson)
-        {
+    public void update(Lesson lesson) {
 
-        }
+    }
 
     @Override
-    public Lesson findById(String id)
-        {
+    public Lesson findById(String id) {
         return null;
-        }
+    }
 
     @Override
     public List<Lesson> findAll() {
         return super.findAll();
-        }
+    }
 
     @Override
-    public void deleteById(String id)
-        {
+    public void deleteById(String id) {
 
-        }
     }
+
+    @Override
+    public List<Lesson> findAllLessonByCourseId(Long courseId) {
+        return findAll().stream()
+                .filter(lesson -> lesson.getCourse().getId().equals(courseId))
+                .collect(Collectors.toList());
+    }
+}
 

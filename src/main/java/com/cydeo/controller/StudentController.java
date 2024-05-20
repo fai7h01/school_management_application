@@ -82,7 +82,7 @@ public class StudentController {
     @GetMapping("/enroll/{email}/{courseId}")
     public String enrollStudent(@PathVariable String email, @PathVariable Long courseId){
         studentService.enrollStudent(email, courseId);
-        return "/student/student-courses";
+        return "redirect:/student/assign/{email}";
     }
 
 }
