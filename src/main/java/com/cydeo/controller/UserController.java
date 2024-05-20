@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/user")
@@ -41,6 +42,11 @@ public class UserController {
 
     @PostMapping("/create")
     public String insertUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+
+        if (!userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", " ", "Password should match");
+        }
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("roles", roleService.findAll());
             model.addAttribute("states", State.values());
@@ -75,7 +81,18 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
+/*
+        if (true) {
+            redirectAttributes.addFlashAttribute("error", "Not allowed to update role");
+        }
+
+ */
+
+        if (!userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", " ", "Password should match");
+        }
 
         if (bindingResult.hasErrors()) {
 

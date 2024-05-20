@@ -8,7 +8,7 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Data
 
 public class User {
 
@@ -34,7 +34,7 @@ public class User {
 
 
 
-    @NotNull
+    @NotEmpty(message = "ConfirmPassword is a required field")
     private String confirmPassword;
 
 
@@ -52,86 +52,7 @@ public class User {
 
 
 
-    public String getPassword() {
-        return password;
-    }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-
-
-    public void setPassword(String password) {
-        this.password = password;
-        checkConfirmPassword();
-    }
-
-
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-        checkConfirmPassword();
-    }
-
-    private void checkConfirmPassword() {
-        if (this.password == null || this.confirmPassword == null) {
-            return;
-        } else if (!this.password.equals(this.confirmPassword)) {
-            this.confirmPassword = null;
-        }
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-
-
-    public Role getRole() {
-        return role;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
 }
 
 
