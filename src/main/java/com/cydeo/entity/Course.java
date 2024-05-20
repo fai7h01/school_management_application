@@ -29,7 +29,7 @@ public class Course {
     private String description;
 
     @NotNull(message = "Select a Course Manager")
-    private User courseManger;//need converter
+    private User courseManager;
 
     @NotNull(message = "Select a start date")
     @DateTimeFormat(pattern="mm/dd/yyyy")

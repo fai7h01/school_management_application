@@ -44,4 +44,10 @@ public class UserServiceImpl extends AbstractMapService<User,String> implements 
     public List<User> findManagers() {
         return findAll().stream().filter(user -> user.getRole().getId()==2).collect(Collectors.toList());
     }
+
+@Override
+public List<User> findInstructor()
+    {
+    return findAll().stream().filter(user -> user.getRole().getId()==3L).collect(Collectors.toList());
+    }
 }
