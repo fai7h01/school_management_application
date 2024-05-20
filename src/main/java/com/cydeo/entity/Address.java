@@ -12,8 +12,9 @@ import lombok.*;
 public class Address {
 
     private String addressInfo;
-    private String phoneNumber;
     private State state;
+    private String phoneNumber;
+
 
 
 }
