@@ -8,38 +8,34 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class LessonServiceImpl extends AbstractMapService<Lesson,Long> implements LessonService
-    {
+public class LessonServiceImpl extends AbstractMapService<Lesson, Long> implements LessonService {
 
     @Override
-    public Lesson save(Lesson lesson){
+    public Lesson save(Lesson lesson) {
         if (lesson.getId() == null)
             lesson.setId(UUID.randomUUID().getMostSignificantBits());
 
         return super.save(lesson.getId(), lesson);
-        }
+    }
 
     @Override
-    public void update(Lesson lesson)
-        {
+    public void update(Lesson lesson) {
 
-        }
+    }
 
     @Override
-    public Lesson findById(Long id)
-        {
-        return null;
-        }
+    public Lesson findById(Long id) {
+        return super.findById(id);
+    }
 
     @Override
     public List<Lesson> findAll() {
         return super.findAll();
-        }
+    }
 
     @Override
-    public void deleteById(Long id)
-        {
-
-        }
+    public void deleteById(Long id) {
+        super.deleteById(id);
     }
+}
 
