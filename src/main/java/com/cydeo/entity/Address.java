@@ -20,13 +20,16 @@ public class Address {
     private String addressInfo;
 
 
+    @NotNull(message = "Please select a state.")
+    private State state;
+
+
     @NotBlank(message = ("Phone number is a required field !"))
-    @Pattern(regexp="(^+1 (\\d{3}) \\d{3}-\\d{4}$)", message = "USA phone numbers in the format +1 (XXX) XXX-XXXX")
+    @Pattern(regexp="^+1 (\\d{3}) \\d{3}-\\d{4}$", message = "USA phone numbers in the format +1 (XXX) XXX-XXXX")
     private String phoneNumber;
 
 
-    @NotNull(message = "Please select a state.")
-    private State state;
+
 
 
 }

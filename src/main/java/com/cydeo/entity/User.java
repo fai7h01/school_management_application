@@ -18,9 +18,9 @@ public class User {
     @Pattern(regexp = "[A-Z]\\w*", message = "First Name must starts with Uppercase character")
     private String firstName;
 
-    @NotBlank(message = "First Name is a required field")
-    @Size(max = 15, min = 2, message = "First Name must be between 2 and 15 characters long")
-    @Pattern(regexp = "[A-Z]\\w*", message = "First Name must starts with Uppercase character")
+    @NotBlank(message = "Last Name is a required field")
+    @Size(max = 15, min = 2, message = "Last Name must be between 2 and 15 characters long")
+    @Pattern(regexp = "[A-Z]\\w*", message = "Last Name must starts with Uppercase character")
     private String lastName;
 
 
@@ -31,13 +31,13 @@ public class User {
 
 
     @NotBlank
-    @Pattern(regexp = "(^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=!])(?=\\S+$).{8,}$)")
-    private String passWord;
+    @Pattern(regexp = "^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=!])(?=\\S+$).{8,}$")
+    private String password;
 
 
 
     @NotBlank
-    private String confirmPassWord;
+    private String confirmPassword;
 
 
 
@@ -55,21 +55,21 @@ public class User {
 
 
     private void checkConfirmPassword() {
-        if (this.passWord == null || this.confirmPassWord == null) {
+        if (this.password == null || this.confirmPassword == null) {
             return;
-        } else if (!this.passWord.equals(this.confirmPassWord)) {
-            this.confirmPassWord = null;
+        } else if (!this.password.equals(this.confirmPassword)) {
+            this.confirmPassword = null;
         }
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
         checkConfirmPassword();
 
     }
 
-    public void setConfirmPassWord(String confirmPassWord) {
-        this.confirmPassWord = confirmPassWord;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
         checkConfirmPassword();
 
     }
