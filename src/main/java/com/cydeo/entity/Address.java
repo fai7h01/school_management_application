@@ -24,8 +24,8 @@ public class Address {
     private State state;
 
 
-    @NotBlank(message = ("Phone number is a required field !"))
-    @Pattern(regexp="^+1 (\\d{3}) \\d{3}-\\d{4}$", message = "USA phone numbers in the format +1 (XXX) XXX-XXXX")
+    @NotBlank(message="Phone number is a required field !")
+    @Pattern( regexp = "^\\+1 \\(\\d{3}\\) \\d{3}-\\d{4}$", message="USA phone numbers in the format +1 (XXX) XXX-XXXX")
     private String phoneNumber;
 
 

@@ -5,8 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -24,19 +23,18 @@ public class User {
     private String lastName;
 
 
-    @Email(message = "Username is a required field")
-    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)(\\.[A-Za-z]{2,})$",
-            message = "Provide a suitable email address ex: michael23jordan23@test.com")
+    @Email(message = "UserName is a required field")
+    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9-]+(.[A-Za-z0-9-]+)@[^-][A-Za-z0-9-]+(.[A-Za-z0-9-]+)(.[A-Za-z]{2,})$", message = "Provide a suitable email address ex: michael23jordan23@test.com")
     private String userName;
 
 
     @NotBlank
-    @Pattern(regexp = "^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=!])(?=\\S+$).{8,}$")
+    @Pattern(regexp ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,20}$", message = "Contains at least one digit. Contains at least one lowercase letter. Contains at least one uppercase letter. Contains at least one special character from the provided set. Does not contain any whitespace.  Is at least 8 characters long.")
     private String password;
 
 
 
-    @NotBlank
+    @NotNull
     private String confirmPassword;
 
 
@@ -54,6 +52,28 @@ public class User {
 
 
 
+    public String getPassword() {
+        return password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+
+
+    public void setPassword(String password) {
+        this.password = password;
+        checkConfirmPassword();
+    }
+
+
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+        checkConfirmPassword();
+    }
+
     private void checkConfirmPassword() {
         if (this.password == null || this.confirmPassword == null) {
             return;
@@ -62,16 +82,55 @@ public class User {
         }
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-        checkConfirmPassword();
-
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-        checkConfirmPassword();
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }
 
