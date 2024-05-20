@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 
-public class UserServiceImpl extends AbstractMapService<User,String> implements UserService {
+public class UserServiceImpl extends AbstractMapService<User, String> implements UserService {
 
 
     @Override
@@ -42,12 +42,17 @@ public class UserServiceImpl extends AbstractMapService<User,String> implements 
 
     @Override
     public List<User> findManagers() {
-        return findAll().stream().filter(user -> user.getRole().getId()==2).collect(Collectors.toList());
+        return findAll().stream().filter(user -> user.getRole().getId() == 2).collect(Collectors.toList());
     }
 
-@Override
-public List<User> findInstructor()
-    {
-    return findAll().stream().filter(user -> user.getRole().getId()==3L).collect(Collectors.toList());
+    @Override
+    public List<User> findInstructor() {
+        return findAll().stream().filter(user -> user.getRole().getId() == 3L).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isPasswordMatched(String password, String confirmPassword) {
+        return password.equals(confirmPassword);
+
     }
 }
