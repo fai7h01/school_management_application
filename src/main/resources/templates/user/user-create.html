@@ -72,7 +72,7 @@
                 <div class="row col-12">
                     <div class="col-3 form-group">
                         <label>Password
-                            <input type="password" class="form-control" placeholder="Password" th:field="*{passWord}">
+                            <input type="password" class="form-control" placeholder="Password" th:field="*{password}">
                         </label>
                         <div class="text-danger" th:if="${#fields.hasErrors('password')}">
                             <ul>
@@ -83,7 +83,7 @@
                     <div class="col-3 form-group">
                         <label>Confirm Password
                             <input type="password" class="form-control" placeholder="Confirm Password"
-                                   th:field="*{confirmPassWord}">
+                                   th:field="*{confirmPassword}">
                         </label>
                         <div class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}">
                             <ul>
