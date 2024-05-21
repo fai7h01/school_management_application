@@ -94,12 +94,17 @@ public class UserServiceImpl extends AbstractMapService<User, String> implements
     }
 
     @Override
-    public boolean isEligibleToUpdate(String username) {
+    public boolean isEligibleToUpdate(String username, Long roleId) {
         User user = findById(username);
+
+        boolean result = true;
+
+        if (user.getRole().getId().equals(roleId)) {
+            return result;
+        }
 
         String roleName = user.getRole().getDescription();
 
-        boolean result = true;
 
         switch (roleName) {
             case "Admin":
@@ -115,7 +120,6 @@ public class UserServiceImpl extends AbstractMapService<User, String> implements
                     result = false;
                 break;
         }
-        ;
 
         return result;
     }
