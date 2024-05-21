@@ -13,6 +13,6 @@ public interface UserService extends CrudService<User, String> {
 
     String isEligibleToDelete(String username);
 
-    boolean isEligibleToUpdate(String username);
+    boolean isEligibleToUpdate(String username, Long roleId);
 
 }

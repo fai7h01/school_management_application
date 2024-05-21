@@ -66,8 +66,11 @@ public class UserController {
         if (!eligibleToDelete.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", eligibleToDelete);
         } else {
+
+            redirectAttributes.addFlashAttribute("success", "Successfully deleted");
             userService.deleteById(username);
         }
+
 
         return "redirect:/user/create";
     }
@@ -88,24 +91,28 @@ public class UserController {
     public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
 
-        if (!userService.isEligibleToUpdate(user.getUserName())) {
+        if (!userService.isEligibleToUpdate(user.getUserName(), user.getRole().getId())) {
             redirectAttributes.addFlashAttribute("error", "Not allowed to update role");
-        } else {
-
-            if (!userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {
-                bindingResult.rejectValue("confirmPassword", " ", "Password should match");
-            }
-
-            if (bindingResult.hasErrors()) {
-
-                model.addAttribute("roles", roleService.findAll());
-
-                model.addAttribute("states", State.values());
-
-                return "/user/user-update";
-            }
-            userService.update(user);
+            return "redirect:/user/update/" + user.getUserName();
         }
+
+
+        if (!userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", " ", "Password should match");
+        }
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("roles", roleService.findAll());
+
+            model.addAttribute("states", State.values());
+
+            return "/user/user-update";
+        }
+
+        redirectAttributes.addFlashAttribute("success", "Successfully updated");
+
+        userService.update(user);
 
         return "redirect:/user/create";
 
