@@ -11,4 +11,8 @@ public interface UserService extends CrudService<User, String> {
 
     boolean isPasswordMatched(String password, String confirmPassword);
 
+    String isEligibleToDelete(String username);
+
+    boolean isEligibleToUpdate(String username);
+
 }

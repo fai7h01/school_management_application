@@ -61,9 +61,13 @@ public class UserController {
 
 
     @GetMapping("/delete/{username}")
-    public String deleteUser(@PathVariable("username") String username) {
-
-        userService.deleteById(username);
+    public String deleteUser(@PathVariable("username") String username, RedirectAttributes redirectAttributes) {
+        String eligibleToDelete = userService.isEligibleToDelete(username);
+        if (!eligibleToDelete.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", eligibleToDelete);
+        } else {
+            userService.deleteById(username);
+        }
 
         return "redirect:/user/create";
     }
@@ -83,26 +87,25 @@ public class UserController {
     @PostMapping("/update")
     public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
-/*
-        if (true) {
+
+        if (!userService.isEligibleToUpdate(user.getUserName())) {
             redirectAttributes.addFlashAttribute("error", "Not allowed to update role");
+        } else {
+
+            if (!userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {
+                bindingResult.rejectValue("confirmPassword", " ", "Password should match");
+            }
+
+            if (bindingResult.hasErrors()) {
+
+                model.addAttribute("roles", roleService.findAll());
+
+                model.addAttribute("states", State.values());
+
+                return "/user/user-update";
+            }
+            userService.update(user);
         }
-
- */
-
-        if (!userService.isPasswordMatched(user.getPassword(), user.getConfirmPassword())) {
-            bindingResult.rejectValue("confirmPassword", " ", "Password should match");
-        }
-
-        if (bindingResult.hasErrors()) {
-
-            model.addAttribute("roles", roleService.findAll());
-
-            model.addAttribute("states", State.values());
-
-            return "/user/user-update";
-        }
-        userService.update(user);
 
         return "redirect:/user/create";
 
