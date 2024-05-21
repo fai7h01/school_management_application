@@ -62,7 +62,7 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
         lessonService.findAllLessonByCourseId(id)
                 .forEach(lesson -> {
                     student.getLessonGrade().put(lesson, new InstructorAssessment("No Assessment", 0L, LocalDate.now()));
-                    lesson.getStudentList().add(student);
+                    lesson.getStudents().add(student);
                 });
     }
 }
