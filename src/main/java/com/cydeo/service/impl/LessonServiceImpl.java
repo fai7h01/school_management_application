@@ -9,12 +9,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class LessonServiceImpl extends AbstractMapService<Lesson, String> implements LessonService {
+public class LessonServiceImpl extends AbstractMapService<Lesson, Long> implements LessonService {
 
     @Override
     public Lesson save(Lesson lesson) {
         if (lesson.getId() == null)
-            lesson.setId(UUID.randomUUID().toString());
+            lesson.setId(UUID.randomUUID().getLeastSignificantBits());
 
         return super.save(lesson.getId(), lesson);
     }
@@ -25,7 +25,7 @@ public class LessonServiceImpl extends AbstractMapService<Lesson, String> implem
     }
 
     @Override
-    public Lesson findById(String id) {
+    public Lesson findById(Long id) {
         return null;
     }
 
@@ -35,7 +35,7 @@ public class LessonServiceImpl extends AbstractMapService<Lesson, String> implem
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
 
     }
 
