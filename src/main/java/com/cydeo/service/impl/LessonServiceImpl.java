@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class LessonServiceImpl extends AbstractMapService<Lesson, Long> implements LessonService {
+
     private  final StudentService studentService;
 
 
@@ -25,29 +26,40 @@ public class LessonServiceImpl extends AbstractMapService<Lesson, Long> implemen
         if (lesson.getId() == null)
             lesson.setId(UUID.randomUUID().getMostSignificantBits());
 
+
         studentService.assignCourseStudentsToNewLesson(lesson.getCourse(), lesson);
         return super.save(lesson.getId(), lesson);
     }
 
-    @Override
-    public void update(Lesson lesson) {
+  @Override
+  public Lesson findById(Long aLong)
+    {
+    return super.findById(aLong);
+    }
+
+
+  @Override
+    public void update(Lesson lesson)
+    {
+    super.update(lesson.getId(), lesson);
 
     }
 
-    @Override
-    public Lesson findById(Long id) {
-        return null;
-    }
 
     @Override
     public List<Lesson> findAll() {
         return super.findAll();
     }
+  
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long aLong)
+    {
+    super.deleteById(aLong);
 
     }
+
+
 
     @Override
     public List<Lesson> findAllLessonByCourseId(Long courseId) {

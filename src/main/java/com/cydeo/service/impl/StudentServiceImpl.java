@@ -55,13 +55,12 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
 
     }
 
-
     @Override
-    public void enrollStudent(String username, Long id) {
+    public void enrollStudent(String username, Long courseId) {
         Student student = findById(username);
-        Course enrollCourse = courseService.findById(id);
+        Course enrollCourse = courseService.findById(courseId);
         student.getCourseStatus().put(enrollCourse, true);
-        lessonService.findAllLessonByCourseId(id)
+        lessonService.findAllLessonByCourseId(courseId)
                 .forEach(lesson -> {
                     student.getLessonGrade().put(lesson, new InstructorAssessment("No Assessment", 0L, LocalDate.now()));
                     lesson.getStudents().add(student);
@@ -80,4 +79,14 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
     }
 
 
+    public void dropStudent(String username, Long courseId) {
+        Student student = findById(username);
+        Course enrolledCourse = courseService.findById(courseId);
+        student.getCourseStatus().put(enrolledCourse, false);
+        lessonService.findAllLessonByCourseId(courseId)
+                .forEach(lesson -> {
+                    student.getLessonGrade().remove(lesson);
+                    lesson.getStudents().remove(student);
+                });
+    }
 }

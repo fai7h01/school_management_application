@@ -51,17 +51,16 @@ public class LessonController
     public String editLesson(@PathVariable("id") Long id, Model model)
         {
         model.addAttribute("lesson",lessonService.findById(id));
-        model.addAttribute("description",lessonService.findById(id).getDescription());
-        model.addAttribute("instructor",userService.findInstructor());
-        model.addAttribute("course",courseService.findAll());
+        model.addAttribute("instructors",userService.findInstructor());
+        model.addAttribute("courses",courseService.findAll());
         return "/lesson/lesson-update";
         }
 
-    @PostMapping("/update")
-    public String updateLesson(@Valid @ModelAttribute("lesson") Lesson lesson)
+    @PostMapping("/update/{id}")
+    public String updateLesson( @ModelAttribute("lesson") Lesson lesson)
         {
         lessonService.update(lesson);
-        return "redirect:/lesson/update";
+        return "redirect:/lesson/create";
         }
 
     }
