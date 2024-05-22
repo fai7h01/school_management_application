@@ -2,6 +2,7 @@ package com.cydeo.service.impl;
 
 import com.cydeo.entity.Course;
 import com.cydeo.entity.InstructorAssessment;
+import com.cydeo.entity.Lesson;
 import com.cydeo.entity.Student;
 import com.cydeo.service.CourseService;
 import com.cydeo.service.LessonService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl extends AbstractMapService<Student, String> implements StudentService {
@@ -66,6 +68,17 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
     }
 
     @Override
+    public void assignCourseStudentsToNewLesson(Course course, Lesson createdLesson) {
+        List<Student>  studentList=
+        lessonService.findAll().stream().filter(lesson-> lesson.getCourse().getId().equals(course.getId()))
+                .flatMap(lesson -> lesson.getStudents().stream()).collect(Collectors.toList());
+        createdLesson.setStudents(studentList);
+        studentList.forEach(student -> student.getLessonGrade().put(createdLesson,
+                new InstructorAssessment("No Assessment", 0L, LocalDate.now())));
+
+    }
+
+
     public void dropStudent(String username, Long courseId) {
         Student student = findById(username);
         Course enrolledCourse = courseService.findById(courseId);
