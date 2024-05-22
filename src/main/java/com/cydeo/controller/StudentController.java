@@ -85,4 +85,10 @@ public class StudentController {
         return "redirect:/student/assign/{email}";
     }
 
+    @GetMapping("/drop/{email}/{courseId}")
+    public String dropStudent(@PathVariable String email, @PathVariable Long courseId){
+        studentService.dropStudent(email, courseId);
+        return "redirect:/student/assign/{email}";
+    }
+
 }
