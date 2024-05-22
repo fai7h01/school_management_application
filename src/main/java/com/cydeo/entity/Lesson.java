@@ -18,7 +18,7 @@ public class Lesson {
 
         @NotBlank(message = "Lesson Name is a required field")
         @Size(max = 40, min = 2, message = "Lesson Name must be between 2 and 40 characters long")
-        @Pattern(regexp = "([A-Za-z]\\w(?:\\s[A-Za-z]\\w*)*)", message = "Lesson Name must use alphabetic characters with spaces")
+        @Pattern(regexp = "[a-zA-Z][a-zA-Z ]+[a-zA-Z]$", message = "Lesson Name must use alphabetic characters with spaces")
         private String name;
 
         @NotBlank(message = "lesson Description is a required field")
