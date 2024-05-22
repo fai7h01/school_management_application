@@ -35,7 +35,7 @@ public class Student {
     @NotNull
     private Address address;
     private Map<Course,Boolean> courseStatus = new HashMap<>();
-    private Map<Lesson, InstructorAssessment> lessonGrade;
+    private Map<Lesson, InstructorAssessment> lessonGrade = new HashMap<>();
 
 
     public Student(String firstName, String lastName, String email, Gender gender, Address address) {

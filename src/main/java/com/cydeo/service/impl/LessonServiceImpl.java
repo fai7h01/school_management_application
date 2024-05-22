@@ -2,6 +2,8 @@ package com.cydeo.service.impl;
 
 import com.cydeo.entity.Lesson;
 import com.cydeo.service.LessonService;
+import com.cydeo.service.StudentService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +11,21 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class LessonServiceImpl extends AbstractMapService<Lesson, String> implements LessonService {
+public class LessonServiceImpl extends AbstractMapService<Lesson, Long> implements LessonService {
+    private  final StudentService studentService;
+
+
+    public LessonServiceImpl(@Lazy StudentService studentService) {
+        this.studentService = studentService;
+    }
+
 
     @Override
     public Lesson save(Lesson lesson) {
         if (lesson.getId() == null)
-            lesson.setId(UUID.randomUUID().toString());
+            lesson.setId(UUID.randomUUID().getMostSignificantBits());
 
+        studentService.assignCourseStudentsToNewLesson(lesson.getCourse(), lesson);
         return super.save(lesson.getId(), lesson);
     }
 
@@ -25,7 +35,7 @@ public class LessonServiceImpl extends AbstractMapService<Lesson, String> implem
     }
 
     @Override
-    public Lesson findById(String id) {
+    public Lesson findById(Long id) {
         return null;
     }
 
@@ -35,7 +45,7 @@ public class LessonServiceImpl extends AbstractMapService<Lesson, String> implem
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
 
     }
 
