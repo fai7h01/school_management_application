@@ -14,7 +14,8 @@ public class LessonServiceImpl extends AbstractMapService<Lesson, Long> implemen
     @Override
     public Lesson save(Lesson lesson) {
         if (lesson.getId() == null)
-            lesson.setId(UUID.randomUUID().getMostSignificantBits());
+
+            lesson.setId(UUID.randomUUID().getLeastSignificantBits());
 
         return super.save(lesson.getId(), lesson);
     }
@@ -29,6 +30,7 @@ public Lesson findById(Long aLong)
     public void update(Lesson lesson)
     {
     super.update(lesson.getId(), lesson);
+
     }
 
 
@@ -41,6 +43,7 @@ public Lesson findById(Long aLong)
     public void deleteById(Long aLong)
     {
     super.deleteById(aLong);
+
     }
 
 
