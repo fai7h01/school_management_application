@@ -1,9 +1,6 @@
 package com.cydeo.service.impl;
 
-import com.cydeo.entity.Course;
-import com.cydeo.entity.InstructorAssessment;
-import com.cydeo.entity.Lesson;
-import com.cydeo.entity.Student;
+import com.cydeo.entity.*;
 import com.cydeo.service.CourseService;
 import com.cydeo.service.LessonService;
 import com.cydeo.service.StudentService;
@@ -18,6 +15,7 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
 
     private final CourseService courseService;
     private final LessonService lessonService;
+
 
     public StudentServiceImpl(CourseService courseService, LessonService lessonService) {
         this.courseService = courseService;
@@ -78,7 +76,6 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
 
     }
 
-
     public void dropStudent(String username, Long courseId) {
         Student student = findById(username);
         Course enrolledCourse = courseService.findById(courseId);
@@ -89,4 +86,23 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
                     lesson.getStudents().remove(student);
                 });
     }
+
+
+    @Override
+    public List<StudentLesson> findStudentsByInstructor(String username) {
+
+        return lessonService.findAll().stream()
+                .filter(lesson -> lesson.getInstructor().getUserName().equals(username)) // dersleri belirli eğitmene göre filtrele
+                .flatMap(lesson -> lesson.getStudents().stream() // filtrelenen her dersi o dersle ilişkili öğrenciye göre streame al
+                        .flatMap(student -> student.getLessonGrade().keySet().stream() //  her öğrenci için o öğrenciyle ilişkili ders notlarının akışını düzleştirir, böylece bireysel ders notlarıyla çalışabiliriz
+                                .filter(lesson1 -> lesson1.getInstructor().getUserName().equals(username)) // tekrar filtrele ?
+                                .map(lesson1 -> new StudentLesson(student, lesson1)) // filtrelenen her ders notunu bir studentLesson nesnesiyle eşle
+                        )
+                )
+                .distinct() // çiftleri akıştan kaldır!
+                .collect(Collectors.toList()); // listele
+    }
+
+
+
 }
