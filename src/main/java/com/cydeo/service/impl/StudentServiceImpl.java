@@ -92,15 +92,15 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
     public List<StudentLesson> findStudentsByInstructor(String username) {
 
         return lessonService.findAll().stream()
-                .filter(lesson -> lesson.getInstructor().getUserName().equals(username)) // dersleri belirli eğitmene göre filtrele
-                .flatMap(lesson -> lesson.getStudents().stream() // filtrelenen her dersi o dersle ilişkili öğrenciye göre streame al
-                        .flatMap(student -> student.getLessonGrade().keySet().stream() //  her öğrenci için o öğrenciyle ilişkili ders notlarının akışını düzleştirir, böylece bireysel ders notlarıyla çalışabiliriz
-                                .filter(lesson1 -> lesson1.getInstructor().getUserName().equals(username)) // tekrar filtrele ?
-                                .map(lesson1 -> new StudentLesson(student, lesson1)) // filtrelenen her ders notunu bir studentLesson nesnesiyle eşle
+                .filter(lesson -> lesson.getInstructor().getUserName().equals(username))
+                .flatMap(lesson -> lesson.getStudents().stream()
+                        .flatMap(student -> student.getLessonGrade().keySet().stream()
+                                .filter(lesson1 -> lesson1.getInstructor().getUserName().equals(username))
+                                .map(lesson1 -> new StudentLesson(student, lesson1))
                         )
                 )
-                .distinct() // çiftleri akıştan kaldır!
-                .collect(Collectors.toList()); // listele
+                .distinct()
+                .collect(Collectors.toList());
     }
 
 
