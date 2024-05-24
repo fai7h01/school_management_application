@@ -104,5 +104,11 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
     }
 
 
+    @Override
+    public void assessStudent(InstructorAssessment instructorAssessment, String email, Lesson lesson) {
+        instructorAssessment.setDate(LocalDate.now());
+        findById(email).getLessonGrade().put(lesson, instructorAssessment);
+    }
+
 
 }
