@@ -3,6 +3,7 @@ package com.cydeo.controller;
 import com.cydeo.entity.Lesson;
 import com.cydeo.service.CourseService;
 import com.cydeo.service.LessonService;
+import com.cydeo.service.StudentService;
 import com.cydeo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -17,12 +18,14 @@ public class LessonController
     private final LessonService lessonService;
     private final CourseService courseService;
     private final UserService userService;
+    private final StudentService studentService;
 
-    public LessonController(LessonService lessonService, CourseService courseService, UserService userService)
+    public LessonController(LessonService lessonService, CourseService courseService, UserService userService, StudentService studentService)
         {
         this.lessonService = lessonService;
         this.courseService = courseService;
         this.userService = userService;
+        this.studentService = studentService;
         }
 
         @GetMapping("/create")
@@ -63,4 +66,13 @@ public class LessonController
         return "redirect:/lesson/create";
         }
 
+    @GetMapping("/delete/{id}")
+    public String deleteLesson(@PathVariable("id") Long id)
+        {
+        studentService.removeDeletedLessonFromStudents(id);
+        lessonService.deleteById(id);
+        return "redirect:/lesson/create";
+        }
     }
+
+

@@ -103,6 +103,15 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void removeDeletedLessonFromStudents(Long lessonId)
+        {
+        Lesson lesson =lessonService.findById(lessonId);
+        for (Student student : lesson.getStudents())
+          {
+            student.getLessonGrade().remove(lesson);
+          }
+    }
 
 
 }

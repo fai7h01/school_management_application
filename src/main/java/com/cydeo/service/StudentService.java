@@ -13,7 +13,7 @@ public interface StudentService extends CrudService <Student,String> {
     void dropStudent(String username, Long courseId);
 
     void assignCourseStudentsToNewLesson(Course course, Lesson lesson);
-
     public List<StudentLesson> findStudentsByInstructor(String username);
+    void removeDeletedLessonFromStudents(Long lessonId);
 
 }
