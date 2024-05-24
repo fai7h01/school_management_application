@@ -1,9 +1,6 @@
 package com.cydeo.service;
 
-import com.cydeo.entity.Course;
-import com.cydeo.entity.Lesson;
-import com.cydeo.entity.Student;
-import com.cydeo.entity.StudentLesson;
+import com.cydeo.entity.*;
 
 import java.util.List;
 
@@ -15,5 +12,7 @@ public interface StudentService extends CrudService <Student,String> {
     void assignCourseStudentsToNewLesson(Course course, Lesson lesson);
 
     public List<StudentLesson> findStudentsByInstructor(String username);
+
+    public void assessStudent(InstructorAssessment instructorAssessment, String email, Lesson lesson);
 
 }
