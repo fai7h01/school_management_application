@@ -62,10 +62,17 @@ public class CourseServiceImpl extends AbstractMapService<Course, Long> implemen
         Course course = findById(id);
         //If the course is successfully deleted, show “This Course is successfully deleted“ message in the page.
         //Before deleting the course, remove this course from all students (courseStudent)
+        studentService.findAll().forEach(s-> s.getCourseStatus().remove(course));
         super.deleteById(id);
 
     }
 
+    @Override
+    public boolean isNotEligibleToDelete(Long id) {
+        Course foundCourse = findById(id);
+        return lessonService.findAll().stream().anyMatch(l->l.getCourse().equals(foundCourse));
+
+    }
 }
 
 
