@@ -31,7 +31,7 @@ public class CourseController {
     public String insertCourse(@ModelAttribute("course") Course course) {
         //before saving a new course, set all students with status "false" (as it is business requirements, set it in ServiceImp not in this Controller)
         courseService.save(course);
-        return "redirect:/course/course-create";
+        return "redirect:/course/create";
     }
 
 
