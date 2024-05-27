@@ -20,7 +20,8 @@ public class Course {
 
     @NotBlank(message = "Course Name is a required field")
     @Size(max = 40, min = 2, message = "Course Name must be between 2 and 40 characters long")
-    @Pattern(regexp = "([A-Za-z]\\w(?:\\s[A-Za-z]\\w*)*)", message = "Course Name must use alphabetic characters with spaces")
+    //@Pattern(regexp = "([A-Za-z]\\w(?:\\s[A-Za-z]\\w*)*)", message = "Course Name must use alphabetic characters with spaces")
+    @Pattern(regexp = "([A-Za-z]+(?:\s[A-Za-z]+)*)", message = "Course Name must use alphabetic characters with spaces")
     private String name;
 
     @NotBlank(message = "Course Description is a required field")
@@ -31,11 +32,13 @@ public class Course {
     private User courseManager;
 
     @NotNull(message = "Select a start date")
-    @DateTimeFormat(pattern="mm/dd/yyyy")
+    //@DateTimeFormat(pattern="mm/dd/yyyy")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate startDate;
 
     @NotNull(message = "Select an end date")
-    @DateTimeFormat(pattern="mm/dd/yyyy")
+    //@DateTimeFormat(pattern="mm/dd/yyyy")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate endDate;
 
 
