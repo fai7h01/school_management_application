@@ -75,9 +75,9 @@ public class LessonServiceImpl extends AbstractMapService<Lesson, Long> implemen
 
 
     @Override
-    public void deleteById(Long aLong) {
-        super.deleteById(aLong);
-
+    public void deleteById(Long id) {
+    studentService.removeDeletedLessonFromStudents(id);
+    super.deleteById(id);
     }
 
 
