@@ -43,6 +43,9 @@ public class StudentServiceImpl extends AbstractMapService<Student, String> impl
 
     @Override
     public void update(Student student) {
+        Student storedStudent = findById(student.getEmail());
+        student.setCourseStatus(storedStudent.getCourseStatus());
+        student.setLessonGrade(storedStudent.getLessonGrade());
         super.update(student.getEmail(), student);
 
     }

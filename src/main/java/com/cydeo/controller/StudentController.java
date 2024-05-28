@@ -73,9 +73,7 @@ public class StudentController {
             model.addAttribute("states", State.values());
             return "/student/student-update";
         }
-        Student existingStudent = studentService.findById(student.getEmail());
-        student.setCourseStatus(existingStudent.getCourseStatus());
-        student.setLessonGrade(existingStudent.getLessonGrade());
+
         studentService.update(student);
 
 

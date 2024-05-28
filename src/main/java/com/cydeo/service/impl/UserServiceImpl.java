@@ -38,9 +38,15 @@ public class UserServiceImpl extends AbstractMapService<User, String> implements
     }
 
     @Override
-    public void update(User object) {
+    public void update(User user) {
 
-        super.update(object.getUserName(), object);
+        if (user.getRole().getId().equals(2L)){
+            updateLessonsWithUpdatedManager(user);
+        }
+        if (user.getRole().getId().equals(3L)){
+            updateLessonsWithUpdatedInstructor(user);
+        }
+        super.update(user.getUserName(), user);
 
     }
 
@@ -122,5 +128,17 @@ public class UserServiceImpl extends AbstractMapService<User, String> implements
         }
 
         return result;
+    }
+
+    private void updateLessonsWithUpdatedManager(User updatedManager){
+        courseService.findAll().stream()
+                .filter(course -> course.getCourseManager().getUserName().equals(updatedManager.getUserName()))
+                .forEach(course -> course.setCourseManager(updatedManager));
+    }
+
+    private void updateLessonsWithUpdatedInstructor(User updatedInstructor){
+        lessonService.findAll().stream()
+                .filter(lesson -> lesson.getInstructor().getUserName().equals(updatedInstructor.getUserName()))
+                .forEach(lesson -> lesson.setInstructor(updatedInstructor));
     }
 }
