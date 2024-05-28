@@ -50,6 +50,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("roles", roleService.findAll());
             model.addAttribute("states", State.values());
+            model.addAttribute("users", userService.findAll());
 
             return "/user/user-create";
         }

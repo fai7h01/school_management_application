@@ -1,14 +1,16 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.entity.Course;
+import com.cydeo.entity.Student;
 import com.cydeo.service.CourseService;
 import com.cydeo.service.LessonService;
 import com.cydeo.service.StudentService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service//like @Component - creates bean
@@ -53,6 +55,26 @@ public class CourseServiceImpl extends AbstractMapService<Course, Long> implemen
         // During the update operation:
         // we should assign updated course to the relevant lessons.
         // we should assign updated course to the relevant student.courseStatus.
+        //Todo if you update any course that means you should update all lessons' course field.
+        lessonService.findAll().stream()
+                .filter(lesson -> lesson.getCourse().getId().equals(course.getId()))
+                .forEach(lesson -> lesson.setCourse(course));
+        //Todo if you update any course that means you should update all students' courseStatus course information.
+        for (Student student : studentService.findAll()) {
+            Map<Course, Boolean> courseStatus = student.getCourseStatus();
+            List<Course> coursesToUpdate = new ArrayList<>();
+            // Collect courses to be updated
+            for (Map.Entry<Course, Boolean> entry : courseStatus.entrySet()) {
+                if (entry.getKey().getId().equals(course.getId())) {
+                    coursesToUpdate.add(entry.getKey());
+                }
+            }
+            // Update collected courses
+            for (Course oldCourse : coursesToUpdate) {
+                boolean value = courseStatus.remove(oldCourse);
+                courseStatus.put(course, value);
+            }
+        }
         super.update(course.getId(), course);
 
     }
