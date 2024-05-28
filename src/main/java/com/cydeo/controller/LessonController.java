@@ -57,17 +57,25 @@ public class LessonController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateLesson(@ModelAttribute("lesson") Lesson lesson) {
+    public String updateLesson(@Valid @ModelAttribute Lesson lesson, BindingResult bindingResult, Model model)
+        {
+            if (bindingResult.hasErrors())
+            {
+            model.addAttribute("courses", courseService.findAll());
+            model.addAttribute("instructors", userService.findInstructor());
+            return "lesson/lesson-update";
+            }
         lessonService.update(lesson);
         return "redirect:/lesson/create";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteLesson(@PathVariable("id") Long id) {
+    public String deleteLesson(@PathVariable("id") Long id)
+        {
         studentService.removeDeletedLessonFromStudents(id);
         lessonService.deleteById(id);
         return "redirect:/lesson/create";
-    }
+        }
 
     @ModelAttribute
     public void defineGeneralModels(Model model) {
