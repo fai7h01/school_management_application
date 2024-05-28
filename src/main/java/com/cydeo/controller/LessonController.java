@@ -13,32 +13,30 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/lesson")
-public class LessonController
-    {
+public class LessonController {
     private final LessonService lessonService;
     private final CourseService courseService;
     private final UserService userService;
     private final StudentService studentService;
 
-    public LessonController(LessonService lessonService, CourseService courseService, UserService userService, StudentService studentService)
-        {
+    public LessonController(LessonService lessonService, CourseService courseService, UserService userService, StudentService studentService) {
         this.lessonService = lessonService;
         this.courseService = courseService;
         this.userService = userService;
         this.studentService = studentService;
-        }
+    }
 
-        @GetMapping("/create")
-        public String createLesson(Model model){
+    @GetMapping("/create")
+    public String createLesson(Model model) {
         model.addAttribute("lesson", new Lesson());
         model.addAttribute("courses", courseService.findAll());
         model.addAttribute("instructors", userService.findInstructor());
         model.addAttribute("lessons", lessonService.findAll());
         return "/lesson/lesson-create";
-        }
+    }
 
-        @PostMapping("/create")
-        public String insertLesson(@Valid @ModelAttribute("lesson") Lesson lesson, BindingResult bindingResult, Model model){
+    @PostMapping("/create")
+    public String insertLesson(@Valid @ModelAttribute("lesson") Lesson lesson, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("courses", courseService.findAll());
             model.addAttribute("instructors", userService.findInstructor());
@@ -47,32 +45,34 @@ public class LessonController
         }
         lessonService.save(lesson);
         return "redirect:/lesson/create";
-        }
+    }
 
 
     @GetMapping("/update/{id}")
-    public String editLesson(@PathVariable("id") Long id, Model model)
-        {
-        model.addAttribute("lesson",lessonService.findById(id));
-        model.addAttribute("instructors",userService.findInstructor());
-        model.addAttribute("courses",courseService.findAll());
+    public String editLesson(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("lesson", lessonService.findById(id));
+        model.addAttribute("instructors", userService.findInstructor());
+        model.addAttribute("courses", courseService.findAll());
         return "/lesson/lesson-update";
-        }
+    }
 
     @PostMapping("/update/{id}")
-    public String updateLesson( @ModelAttribute("lesson") Lesson lesson)
-        {
+    public String updateLesson(@ModelAttribute("lesson") Lesson lesson) {
         lessonService.update(lesson);
         return "redirect:/lesson/create";
-        }
+    }
 
     @GetMapping("/delete/{id}")
-    public String deleteLesson(@PathVariable("id") Long id)
-        {
+    public String deleteLesson(@PathVariable("id") Long id) {
         studentService.removeDeletedLessonFromStudents(id);
         lessonService.deleteById(id);
         return "redirect:/lesson/create";
-        }
     }
+
+    @ModelAttribute
+    public void defineGeneralModels(Model model) {
+        model.addAttribute("pageTitle", "Lesson || Events");
+    }
+}
 
 

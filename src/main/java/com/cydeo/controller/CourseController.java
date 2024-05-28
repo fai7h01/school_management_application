@@ -80,5 +80,10 @@ public class CourseController {
         return "redirect:/course/create";
     }
 
+    @ModelAttribute
+    public void defineGeneralModels(Model model) {
+        model.addAttribute("pageTitle", "Course || Events");
+    }
+
 }
 

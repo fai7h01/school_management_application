@@ -73,15 +73,9 @@ public class StudentController {
             model.addAttribute("states", State.values());
             return "/student/student-update";
         }
-
         studentService.update(student);
 
-
         return "redirect:/student/create";
-
-
-
-
 
     }
 
@@ -95,6 +89,11 @@ public class StudentController {
     public String dropStudent(@PathVariable String email, @PathVariable Long courseId){
         studentService.dropStudent(email, courseId);
         return "redirect:/student/assign/{email}";
+    }
+
+    @ModelAttribute
+    public void defineGeneralModels(Model model) {
+        model.addAttribute("pageTitle", "Student || Events");
     }
 
 }

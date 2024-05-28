@@ -1,6 +1,9 @@
 package com.cydeo.enums;
 
 
+import lombok.Getter;
+
+@Getter
 public enum Gender {
 
 
@@ -12,7 +15,4 @@ public enum Gender {
         this.value =  value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }

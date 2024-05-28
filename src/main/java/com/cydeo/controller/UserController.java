@@ -119,5 +119,8 @@ public class UserController {
 
     }
 
-
+    @ModelAttribute
+    public void defineGeneralModels(Model model) {
+        model.addAttribute("pageTitle", "User || Events");
+    }
 }

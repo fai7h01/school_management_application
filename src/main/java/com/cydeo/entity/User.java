@@ -3,7 +3,9 @@ package com.cydeo.entity;
 import com.cydeo.enums.Gender;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @NoArgsConstructor

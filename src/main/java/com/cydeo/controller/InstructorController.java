@@ -54,5 +54,10 @@ public class InstructorController {
         studentService.assessStudent(instructorAssessment, student.getEmail(), lesson);
         return "redirect:/instructor/students";
     }
+
+    @ModelAttribute
+    public void defineGeneralModels(Model model){
+        model.addAttribute("pageTitle", "Instructor || Events");
+    }
     
 }
