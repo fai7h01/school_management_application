@@ -3,10 +3,7 @@ package com.cydeo.entity;
 import com.cydeo.enums.Gender;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +12,6 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Student {
     @NotBlank(message = "First Name is a required field")
     @Size(max = 15, min = 2, message = "First Name must be between 2 and 15 characters long")
