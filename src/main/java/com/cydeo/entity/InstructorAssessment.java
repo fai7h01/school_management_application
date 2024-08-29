@@ -1,25 +1,29 @@
 package com.cydeo.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
+
+@Getter
+@Setter
 @AllArgsConstructor
-@Data
 @NoArgsConstructor
-public class InstructorAssessment {
+@Entity
+@Table(name = "assessments")
+public class InstructorAssessment extends BaseEntity{
 
-    @NotBlank(message = "Message can not be empty!")
-    private String instructorImpressionOfStudent ;
-    @NotNull(message = "Grade can not be empty")
+    private LocalDate gradeDate;
     private Long grade;
-    private LocalDate date;
+    private String instructorImpressionOfStudent;
 
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    private StudentLesson studentLesson;
 
 }

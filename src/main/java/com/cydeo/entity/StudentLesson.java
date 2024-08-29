@@ -1,15 +1,22 @@
 package com.cydeo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
-@Data
+
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentLesson {
-    private Student student;
-    private Lesson lesson;
+@Entity
+@SQLRestriction("is_deleted is false")
+public class StudentLesson extends BaseEntity{
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Lesson lesson;
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Student student;
 }
