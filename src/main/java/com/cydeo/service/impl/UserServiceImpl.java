@@ -1,42 +1,64 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.UserDTO;
+import com.cydeo.entity.User;
+import com.cydeo.repository.UserRepository;
 import com.cydeo.service.UserService;
+import com.cydeo.util.MapperUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+    private final MapperUtil mapper;
 
+    public UserServiceImpl(UserRepository userRepository, MapperUtil mapper) {
+        this.userRepository = userRepository;
+        this.mapper = mapper;
+    }
+    
     @Override
     public List<UserDTO> listAllUsers() {
-        return List.of();
+        return userRepository.retrieveAllUsersOrderByDesc().stream()
+                .map(user -> mapper.convert(user, new UserDTO()))
+                .toList();
     }
 
     @Override
-    public List<UserDTO> listAllByRole() {
-        return List.of();
+    public List<UserDTO> listAllByRole(String roleDescription) {
+        return userRepository.findAllByRoleDescriptionIgnoreCase(roleDescription).stream()
+                .map(user -> mapper.convert(user, new UserDTO())).toList();
     }
 
     @Override
     public UserDTO findByUsername(String username) {
-        return null;
+        return mapper.convert(userRepository.findByUsername(username), new UserDTO());
     }
 
     @Override
     public UserDTO save(UserDTO user) {
-        return null;
+        User savedUser = mapper.convert(user, new User());
+        return mapper.convert(savedUser, new UserDTO());
     }
 
     @Override
     public UserDTO update(UserDTO user) {
-        return null;
+        User foundUser = userRepository.findByUsername(user.getUsername());
+        User convertedUser = mapper.convert(user, new User());
+        convertedUser.setId(foundUser.getId());
+        User savedUser = userRepository.save(convertedUser);
+        return mapper.convert(savedUser, new UserDTO());
     }
 
     @Override
     public void delete(Long id) {
-
+        User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User not found."));
+        user.setIsDeleted(true);
+        user.setUsername(user.getUsername() + "-" + user.getId());
+        userRepository.save(user);
     }
 }

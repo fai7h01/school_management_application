@@ -8,7 +8,7 @@ public interface UserService {
 
     List<UserDTO> listAllUsers();
 
-    List<UserDTO> listAllByRole();
+    List<UserDTO> listAllByRole(String roleDescription);
 
     UserDTO findByUsername(String username);
 

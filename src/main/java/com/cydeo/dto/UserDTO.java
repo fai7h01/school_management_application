@@ -33,9 +33,9 @@ public class UserDTO {
     @Pattern(regexp = "[A-Z]\\w*", message = "Last Name must starts with Uppercase character")
     private String lastName;
 
-    @Email(message = "UserName is a required field")
+    @Email(message = "Username is a required field")
     @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9-]+(.[A-Za-z0-9-]+)@[^-][A-Za-z0-9-]+(.[A-Za-z0-9-]+)(.[A-Za-z]{2,})$", message = "Provide a suitable email address ex: michael23jordan23@test.com")
-    private String userName;
+    private String username;
 
     @NotBlank
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,20}$", message = "Contains at least one digit. Contains at least one lowercase letter. Contains at least one uppercase letter. Contains at least one special character from the provided set. Does not contain any whitespace.  Is at least 8 characters long.")
