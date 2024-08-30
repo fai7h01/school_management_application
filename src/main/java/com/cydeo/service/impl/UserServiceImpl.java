@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.mapper = mapper;
     }
-    
+
     @Override
     public List<UserDTO> listAllUsers() {
         return userRepository.retrieveAllUsersOrderByDesc().stream()
@@ -36,18 +36,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findByUsername(String username) {
-        return mapper.convert(userRepository.findByUsername(username), new UserDTO());
+        return mapper.convert(userRepository.findByUserName(username), new UserDTO());
     }
 
     @Override
     public UserDTO save(UserDTO user) {
-        User savedUser = mapper.convert(user, new User());
+        User savedUser = userRepository.save(mapper.convert(user, new User()));
         return mapper.convert(savedUser, new UserDTO());
     }
 
     @Override
     public UserDTO update(UserDTO user) {
-        User foundUser = userRepository.findByUsername(user.getUsername());
+        User foundUser = userRepository.findByUserName(user.getUserName());
         User convertedUser = mapper.convert(user, new User());
         convertedUser.setId(foundUser.getId());
         User savedUser = userRepository.save(convertedUser);
@@ -58,7 +58,17 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User not found."));
         user.setIsDeleted(true);
-        user.setUsername(user.getUsername() + "-" + user.getId());
+        user.setUserName(user.getUserName() + "-" + user.getId());
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean isPasswordMatched(String password, String confirmedPassword) {
+        return password.equals(confirmedPassword);
+    }
+
+    @Override
+    public boolean isEmailRegistered(String email) {
+        return userRepository.findAll().stream().anyMatch(user -> user.getUserName().equals(email));
     }
 }

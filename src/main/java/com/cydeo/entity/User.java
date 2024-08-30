@@ -2,8 +2,6 @@ package com.cydeo.entity;
 
 import com.cydeo.enums.Gender;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -21,7 +19,7 @@ public class User extends BaseEntity{
     private String lastName;
 
     @Column(unique = true)
-    private String username;
+    private String userName;
 
     private String password;
 

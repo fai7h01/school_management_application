@@ -18,6 +18,10 @@ public interface UserService {
 
     void delete(Long id);
 
+    boolean isPasswordMatched(String password, String confirmedPassword);
+
+    boolean isEmailRegistered(String email);
+
 //    boolean isEligibleToUpdate(Long userId, Long roleId);
 //
 //    String isEligibleToDelete(Long id);
